@@ -3,10 +3,11 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 
-import authRoutes from "./routes/auth.routes.js";
-import { globalErrorHandler } from "./middleware/errorMiddleware.js";
-
 dotenv.config();
+
+import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.route.js";
+import { globalErrorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 // global Error Handler
 app.use(globalErrorHandler);

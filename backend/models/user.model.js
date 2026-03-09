@@ -38,6 +38,10 @@ const profileSchema = {
     type: String,
     default: "",
   },
+  profilePicId: {
+    type: String,
+    default: "",
+  },
   bio: {
     type: String,
     trim: true,
