@@ -7,20 +7,29 @@ export const registerUser = async (req, res) => {
   try {
     const { name, username, email, mobile, password } = req.body;
 
+    // validation
     if (!name || !username || !email || !password) {
-      return res.status(400).json({ message: "All fields are required!" });
+      return res.status(400).json({
+        message: "All fields are required!",
+      });
     }
 
     // checking existing user
-    const existingUser = await User.findOne({
-      $or: [{ email }, { username }, { mobile }],
-    });
+    const query = [{ email }, { username }];
 
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists!" });
+    if (mobile) {
+      query.push({ mobile });
     }
 
-    // hashing the password
+    const existingUser = await User.findOne({ $or: query });
+
+    if (existingUser) {
+      return res.status(400).json({
+        message: "User already exists!",
+      });
+    }
+
+    // hashing password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // creating new user
@@ -32,16 +41,19 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    // remove password from response
-    user.password = undefined;
+    const userData = user.toObject();
+    delete userData.password;
 
     res.status(201).json({
       message: "User registered successfully",
-      user,
+      user: userData,
     });
   } catch (err) {
-    console.error("Error While register new User:", err.message);
-    res.status(500).json({ message: "Server Error!" });
+    console.error("Error While Register User:", err.message);
+
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 };
 
@@ -51,9 +63,9 @@ export const loginUser = async (req, res) => {
     const { identifier, password } = req.body;
 
     if (!identifier || !password) {
-      return res
-        .status(400)
-        .json({ message: "Identifier and password are required!" });
+      return res.status(400).json({
+        message: "Identifier and password are required!",
+      });
     }
 
     // finding user with email / username / mobile
@@ -63,17 +75,21 @@ export const loginUser = async (req, res) => {
         { username: identifier },
         { mobile: identifier },
       ],
-    });
+    }).select("+password");
 
     if (!user) {
-      return res.status(404).json({ message: "User not found!" });
+      return res.status(404).json({
+        message: "User not found!",
+      });
     }
 
     // compare password
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials!" });
+      return res.status(400).json({
+        message: "Invalid credentials!",
+      });
     }
 
     // generate token
@@ -81,16 +97,19 @@ export const loginUser = async (req, res) => {
       expiresIn: "7d",
     });
 
-    // remove password from response
-    user.password = undefined;
+    const userData = user.toObject();
+    delete userData.password;
 
-    res.json({
+    res.status(200).json({
       message: "Login Successfully!",
       token,
-      user,
+      user: userData,
     });
   } catch (err) {
     console.error("Error While Login User:", err.message);
-    res.status(500).json({ message: "Server Error!" });
+
+    res.status(500).json({
+      message: "Server Error!",
+    });
   }
 };
