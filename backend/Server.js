@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth.routes.js";
+import { globalErrorHandler } from "./middleware/errorMiddleware.js";
 
 dotenv.config();
 
@@ -19,6 +20,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+
+// global Error Handler
+app.use(globalErrorHandler);
 
 // PORT
 const PORT = process.env.PORT || 7870;
