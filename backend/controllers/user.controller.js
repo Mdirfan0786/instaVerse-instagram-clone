@@ -17,6 +17,8 @@ export const getUserByUsername = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     user,
+    followers: user.followers_count,
+    following: user.following_count,
   });
 });
 
@@ -102,6 +104,7 @@ export const searchUser = asyncHandler(async (req, res) => {
   const search = query.trim();
 
   const users = await User.find({
+    _id: { $ne: req.user.id }, //remove own profile from search
     $or: [
       { username: { $regex: search, $options: "i" } },
       { name: { $regex: search, $options: "i" } },
@@ -110,13 +113,122 @@ export const searchUser = asyncHandler(async (req, res) => {
     .select("name username profilePic")
     .limit(10);
 
-  // remove current user
-  const filteredUsers = users.filter(
-    (user) => user._id.toString() !== req.user.id,
-  );
+  res.status(200).json({
+    success: true,
+    users: users,
+  });
+});
+
+//* =============== Follow User =============== *//
+export const followUser = asyncHandler(async (req, res) => {
+  const { username } = req.user;
+  const { username: targetUsername } = req.params;
+
+  if (username === targetUsername) {
+    throw new AppError(400, "You can't follow yourself");
+  }
+
+  const user = await User.findOne({ username });
+  const targetUser = await User.findOne({ username: targetUsername });
+
+  if (!user || !targetUser) {
+    throw new AppError(404, "User not found");
+  }
+
+  // already following check
+  if (
+    user.following.some((id) => id.toString() === targetUser._id.toString())
+  ) {
+    throw new AppError(400, "Already following this user");
+  }
+
+  await User.findByIdAndUpdate(user._id, {
+    $addToSet: { following: targetUser._id }, //$addToSet - for removing duplicate follow
+    $inc: { following_count: 1 },
+  });
+
+  await User.findByIdAndUpdate(targetUser._id, {
+    $addToSet: { followers: user._id },
+    $inc: { followers_count: 1 },
+  });
 
   res.status(200).json({
     success: true,
-    users: filteredUsers,
+    message: "User followed successfully",
+  });
+});
+
+//* =============== unfollow User =============== *//
+export const unfollowUser = asyncHandler(async (req, res) => {
+  const { username } = req.user;
+  const { username: targetUsername } = req.params;
+
+  const user = await User.findOne({ username });
+  const targetUser = await User.findOne({ username: targetUsername });
+
+  if (!user || !targetUser) {
+    throw new AppError(404, "User not found");
+  }
+
+  // Check if the current user is actually following the target user
+  if (
+    !user.following.some((id) => id.toString() === targetUser._id.toString())
+  ) {
+    throw new AppError(400, "You are not following this user");
+  }
+
+  await User.findByIdAndUpdate(user._id, {
+    $pull: { following: targetUser._id },
+    $inc: { following_count: -1 },
+  });
+
+  await User.findByIdAndUpdate(targetUser._id, {
+    $pull: { followers: user._id },
+    $inc: { followers_count: -1 },
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "User unfollowed successfully",
+  });
+});
+
+//* =============== Getting Followers List =============== *//
+export const getFollowers = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+
+  const user = await User.findOne({ username }).populate(
+    "followers",
+    "username name profilePic",
+  );
+
+  if (!user) {
+    throw new AppError(404, "User not found!");
+  }
+
+  res.status(200).json({
+    success: true,
+    count: user.followers_count,
+    followers: user.followers,
+  });
+});
+
+//* =============== Getting Followings List =============== *//
+export const getFollowings = asyncHandler(async (req, res) => {
+  const { username } = req.params;
+
+  const user = await User.findOne({ username }).populate(
+    "following",
+    "username name profilePic",
+  );
+
+  if (!user) {
+    throw new AppError(404, "User not found!");
+  }
+
+  res.status(200).json({
+    success: true,
+    count: user.following_count,
+    followings: user.following,
   });
 });

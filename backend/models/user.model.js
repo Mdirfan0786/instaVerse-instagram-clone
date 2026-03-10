@@ -67,6 +67,16 @@ const socialSchema = {
       ref: "User",
     },
   ],
+
+  followers_count: {
+    type: Number,
+    default: 0,
+  },
+
+  following_count: {
+    type: Number,
+    default: 0,
+  },
 };
 
 const userSchema = new mongoose.Schema(
