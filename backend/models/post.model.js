@@ -32,17 +32,29 @@ const PostSchema = new mongoose.Schema(
       },
     ],
 
-    comments: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
-      },
-    ],
+    // comments: [
+    //   {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Comment",
+    //   },
+    // ],
+
+    commentsCount: {
+      type: Number,
+      default: 0,
+    },
 
     shares: {
       type: Number,
       default: 0,
     },
+
+    sharedBy: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
 
   { timestamps: true },

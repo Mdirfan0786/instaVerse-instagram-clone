@@ -67,20 +67,52 @@ export const getFeed = asyncHandler(async (req, res) => {
     owner: { $in: [...user.following, userId] },
   });
 
+  const hasMore = skip + posts.length < totalPosts;
+
   res.status(200).json({
     success: true,
     message: "Feed fetched successfully",
     page,
     totalPosts,
     count: posts.length,
+    hasMore,
     posts,
+  });
+});
+
+//* =============== Delete Post =============== *//
+export const deletePost = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+
+  if (!postId) {
+    throw new AppError(400, "Post id required!");
+  }
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    throw new AppError(404, "Post not found!");
+  }
+
+  // Check owner
+  const isPostOwner = post.owner.toString() === req.user._id.toString();
+
+  if (!isPostOwner) {
+    throw new AppError(403, "You are not authorized to delete this post");
+  }
+
+  await post.deleteOne();
+
+  res.status(200).json({
+    success: true,
+    message: "Post deleted successfully",
   });
 });
 
 //* =============== Toggle Like =============== *//
 export const toggleLike = asyncHandler(async (req, res) => {
   const userId = req.user.id;
-  const postId = req.params.id;
+  const { postId } = req.params;
 
   const post = await Post.findById(postId);
 
@@ -120,4 +152,38 @@ export const toggleLike = asyncHandler(async (req, res) => {
       likesCount: updatedPost.likes.length,
     });
   }
+});
+
+//* =============== Share Post =============== *//
+export const sharePost = asyncHandler(async (req, res) => {
+  const { postId } = req.params;
+  const userId = req.user.id;
+
+  if (!postId) {
+    throw new AppError(400, "postId required!");
+  }
+
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    throw new AppError(404, "Post not found");
+  }
+
+  // add User uniquely
+  const updatedPost = await Post.findByIdAndUpdate(
+    postId,
+    { $addToSet: { sharedBy: userId } },
+    { returnDocument: "after" },
+  );
+
+  // Share count updation
+  updatedPost.shares = updatedPost.sharedBy.length;
+
+  await updatedPost.save();
+
+  res.status(200).json({
+    success: true,
+    message: "Post shared successfully",
+    shares: updatedPost.shares,
+  });
 });

@@ -8,6 +8,7 @@ dotenv.config();
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.route.js";
 import postRoute from "./routes/post.route.js";
+import commentRoute from "./routes/comment.route.js";
 import { globalErrorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
@@ -23,7 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoute);
+app.use("/api/posts", postRoute, commentRoute);
 
 // global Error Handler
 app.use(globalErrorHandler);
