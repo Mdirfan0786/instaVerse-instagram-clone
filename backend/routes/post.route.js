@@ -5,25 +5,47 @@ import {
   createPost,
   deletePost,
   getFeed,
+  getUserPost,
+  getAllPosts,
+  savedPost,
   sharePost,
   toggleLike,
+  unsavePost,
+  explorePosts,
+  getSavedPost,
 } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
-// ================= Create Post route =================
+// ================= Create Post =================
 router.post("/", isLoggedIn, upload.single("media"), createPost);
 
-// ================= Get Post Feed route =================
+// ================= Feed =================
 router.get("/feed", isLoggedIn, getFeed);
 
-// ================= Toggle Like route =================
+// ================= Explore =================
+router.get("/explore", isLoggedIn, explorePosts);
+
+// ================= Explore =================
+router.get("/saved", isLoggedIn, getSavedPost);
+
+// ================= User All Posts (Profile) =================
+router.get("/user/:username", isLoggedIn, getAllPosts);
+
+// ================= Toggle Like =================
 router.post("/:postId/like", isLoggedIn, toggleLike);
 
-// ================= Share Post route =================
+// ================= Share =================
 router.post("/:postId/share", isLoggedIn, sharePost);
 
-// ================= Delete Post route =================
+// ================= Save / Unsave =================
+router.post("/:postId/save", isLoggedIn, savedPost);
+router.delete("/:postId/save", isLoggedIn, unsavePost);
+
+// ================= Delete Post =================
 router.delete("/:postId", isLoggedIn, deletePost);
+
+// ================= Get Single Post =================
+router.get("/:postId", isLoggedIn, getUserPost);
 
 export default router;

@@ -77,6 +77,18 @@ const socialSchema = {
     type: Number,
     default: 0,
   },
+
+  postCount: {
+    type: Number,
+    default: 0,
+  },
+
+  savedPosts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 };
 
 const userSchema = new mongoose.Schema(

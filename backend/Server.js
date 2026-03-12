@@ -35,14 +35,16 @@ const PORT = process.env.PORT || 7870;
 // Database
 const start = async () => {
   try {
-    await mongoose.connect(process.env.MONGO_URI, { dbName: "instaVerse" });
+    await mongoose.connect(process.env.MONGO_URI, {
+      dbName: "instaVerse",
+    });
     console.log("MongoDB Connected!");
 
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   } catch (err) {
-    console.log("failed to start server!", err.message);
+    console.error("Failed to start server:", err);
     process.exit(1);
   }
 };
