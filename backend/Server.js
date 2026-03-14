@@ -1,9 +1,12 @@
-import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 
 dotenv.config();
+
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import passport from "passport";
+import "./config/passport.js";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.route.js";
@@ -13,9 +16,16 @@ import { globalErrorHandler } from "./middleware/errorMiddleware.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(passport.initialize());
 
 // Routes
 app.get("/", (req, res) => {

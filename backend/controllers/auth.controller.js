@@ -90,8 +90,27 @@ export const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
+//* =============== Google Login =============== *//
+export const googleCallback = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "7d",
+    });
+
+    res.redirect(`http://localhost:5173/auth/callback?token=${token}`);
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Google authentication failed",
+    });
+  }
+};
+
 //* =============== Get Me =============== *//
 export const getMe = asyncHandler(async (req, res) => {
+  console.log("Get me Fetched:");
   const user = await User.findById(req.user.id).select("-password");
 
   if (!user) {

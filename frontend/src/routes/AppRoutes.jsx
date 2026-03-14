@@ -7,6 +7,7 @@ import Explore from "../pages/Explore/Explore.jsx";
 import Home from "../pages/Home/Home.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import SavedPost from "../pages/SavedPosts/SavedPosts.jsx";
+import AuthCallback from "../pages/AuthCallback/AuthCallback.jsx";
 
 import ProtectedRoutes from "./protectedRoutes";
 
@@ -17,12 +18,13 @@ const AppRoutes = () => {
       {/* Root route */}
       <Route
         path="/"
-        element={token ? <Navigate to="/home" /> : <Navigate to="/login" />}
+        element={token ? <Navigate to="/home" /> : <Navigate to={"/login"} />}
       />
 
       {/* Public route */}
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Register />} />
+      <Route path="/auth/callback" element={<AuthCallback />} />
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoutes />}>

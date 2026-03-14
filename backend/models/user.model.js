@@ -21,8 +21,13 @@ const basicInfoSchema = {
   },
   password: {
     type: String,
-    required: true,
+    required: function () {
+      return !this.googleId;
+    },
     select: false,
+  },
+  googleId: {
+    type: String,
   },
   mobile: {
     type: String,

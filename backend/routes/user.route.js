@@ -20,7 +20,7 @@ const router = express.Router();
 router.get("/search", isLoggedIn, searchUser);
 
 // ================= CURRENT USER =================
-router.get("/me", isLoggedIn, getMe);
+// router.get("/me", isLoggedIn, getMe);
 
 // ================= PROFILE UPDATE =================
 router.put("/edit", isLoggedIn, upload.single("profilePic"), updateUser);
