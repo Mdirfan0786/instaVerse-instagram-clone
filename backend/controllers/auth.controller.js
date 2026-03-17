@@ -110,7 +110,6 @@ export const googleCallback = async (req, res) => {
 
 //* =============== Get Me =============== *//
 export const getMe = asyncHandler(async (req, res) => {
-  console.log("Get me Fetched:");
   const user = await User.findById(req.user.id).select("-password");
 
   if (!user) {
