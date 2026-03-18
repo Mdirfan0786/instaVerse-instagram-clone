@@ -62,6 +62,7 @@ const Register = () => {
 
       const res = await clientServer.post("/auth/register", cleanForm);
 
+      console.log(res.data);
       Login(res.data.user, res.data.token);
 
       navigate("/home");

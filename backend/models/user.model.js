@@ -15,9 +15,9 @@ const basicInfoSchema = {
   },
   email: {
     type: String,
-    required: true,
     trim: true,
     unique: true,
+    sparse: true,
   },
   password: {
     type: String,
