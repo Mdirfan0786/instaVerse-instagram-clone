@@ -1,0 +1,149 @@
+/* ===== Navbar Container ===== */
+nav {
+  height: 5rem;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #dbdbdb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ===== Left: Logo Section ===== */
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Logo icon */
+.logo img {
+  height: 2.5rem;
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* Text logo */
+.text_logo img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+/* ===== Profile Container ===== */
+.profile_container {
+  position: relative;
+}
+
+.profile_img {
+  height: 2.6rem;
+  width: 2.6rem;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* hover effect */
+.profile_img:hover {
+  transform: scale(1.08);
+  opacity: 0.85;
+}
+
+/* ===== Dropdown ===== */
+.dropdown {
+  position: absolute;
+  top: 3.8rem;
+  right: 0;
+  width: 200px;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  padding: 8px 5px;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+
+  /* animation*/
+  opacity: 0;
+  transform: translateY(-10px) scale(0.95);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* active state */
+.dropdown.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* icon */
+.icon {
+  font-size: 1.3rem !important;
+  display: flex;
+  align-items: center;
+  color: inherit;
+  background-color: transparent;
+}
+
+/* ===== Dropdown Items ===== */
+.dropdown a,
+.logout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #262626;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-radius: 8px; /* 🔥 add this */
+}
+
+/* hover */
+.dropdown a:hover,
+.logout:hover {
+  background-color: #f2f2f2;
+}
+
+.dropdown a:hover .icon,
+.logout:hover .icon {
+  transform: scale(1.1);
+}
+
+/* divider */
+.divider {
+  height: 1px;
+  background: #eee;
+  margin: 5px 0;
+}
+
+/* logout */
+.logout {
+  color: #ed4956;
+  font-weight: 500;
+}
+/* ===== Responsive (Mobile) ===== */
+@media (max-width: 768px) {
+  nav {
+    height: 4rem;
+    padding: 0 12px;
+  }
+
+  .logo img {
+    height: 2rem;
+  }
+
+  .text_logo img {
+    display: none;
+  }
+
+  .profile_Icon {
+    font-size: 2rem !important;
+  }
+}

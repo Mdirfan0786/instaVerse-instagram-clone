@@ -8,8 +8,10 @@ import Home from "../pages/Home/Home.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import SavedPost from "../pages/SavedPosts/SavedPosts.jsx";
 import AuthCallback from "../pages/AuthCallback/AuthCallback.jsx";
+import Settings from "../pages/Settings/Settings.jsx";
 
 import ProtectedRoutes from "./protectedRoutes";
+import AppLayout from "../components/Layout/AppLayout/AppLayout.jsx";
 
 const AppRoutes = () => {
   const token = localStorage.getItem("token");
@@ -28,10 +30,13 @@ const AppRoutes = () => {
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoutes />}>
-        <Route path="/home" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/saved" element={<SavedPost />} />
-        <Route path="/profile/:username" element={<Profile />} />
+        <Route element={<AppLayout />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/saved" element={<SavedPost />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/profile/:username" element={<Profile />} />
+        </Route>
       </Route>
     </Routes>
   );

@@ -1,0 +1,17 @@
+.appLayout {
+  padding-inline: 6rem;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .appLayout {
+    padding-inline: 3rem;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .appLayout {
+    padding-inline: 0.5rem;
+  }
+}
