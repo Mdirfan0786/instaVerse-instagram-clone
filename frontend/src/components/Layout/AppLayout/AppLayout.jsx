@@ -1,22 +1,24 @@
 import React from "react";
 import Styles from "./AppLayout.module.css";
-import Navbar from "../Navbar/Navbar";
-import { Style } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
+import Sidebar from "../Sidebar/Sidebar";
+import RightSidebar from "../RightSidebar/RightSidebar";
 
 const AppLayout = () => {
   return (
-    <div className={Styles.appLayout}>
-      {/* Navbar */}
-      <Navbar />
+    <div className={Styles.layout}>
+      <div className={Styles.sidebar_layout}>
+        <Sidebar />
+      </div>
 
-      {/* Main layout */}
-      <div className={Styles.main_layout}>
-        <div className={Styles.left_Container}></div>
-        <div className={Styles.content}>
+      <div className={Styles.main_content}>
+        <div className={Styles.page_content}>
           <Outlet />
         </div>
-        <div className={Styles.right_Container}></div>
+      </div>
+
+      <div className={Styles.right_sidebar_layout}>
+        <RightSidebar />
       </div>
     </div>
   );

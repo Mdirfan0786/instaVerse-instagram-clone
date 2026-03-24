@@ -1,0 +1,96 @@
+/* =======sidebar ======== */
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+/* Logo icon */
+.logo img {
+  height: 2.5rem;
+  width: auto;
+  object-fit: contain;
+  cursor: pointer;
+}
+
+/* Text logo */
+.text_logo img {
+  height: 1.4rem;
+  cursor: pointer;
+}
+
+/* Profile mini */
+.profile_mini {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  padding: 10px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+  transition: 0.2s ease;
+}
+
+.profile_mini_left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.profile_mini_left:hover {
+  opacity: 0.8;
+}
+
+.profile_mini_left img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.subtext {
+  font-size: 12px;
+  color: gray;
+}
+
+/* ======== Sidebar Items ========= */
+
+/* Sidebar Items */
+.sidebar_item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: black;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
+
+.sidebar_item:hover {
+  background: #f2f2f2;
+}
+
+.sidebar_item.active {
+  font-weight: bold;
+  background: #e6e6e6;
+}
+
+.icon {
+  font-size: 20px;
+}
+
+.label {
+  font-size: 16px;
+}

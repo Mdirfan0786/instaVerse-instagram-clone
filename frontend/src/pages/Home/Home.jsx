@@ -1,11 +1,11 @@
 import React from "react";
+import Story from "../../components/Layout/Story/Story";
 
 const Home = () => {
-  console.log("Home rendered");
-
   return (
     <>
-      <div>Home Component</div>
+      <Story />
+      {/* posts yaha aayenge */}
     </>
   );
 };

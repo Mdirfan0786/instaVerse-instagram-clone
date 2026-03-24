@@ -8,14 +8,14 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import LogoutSharpIcon from "@mui/icons-material/LogoutSharp";
 
-import { AuthContext } from "../../../context/AuthContext";
+import { useAuth } from "../../../hooks/useAuth.js";
 import getProfileImage from "../../../utils/getProfileImage.js";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef();
 
-  const { user, Logout } = useContext(AuthContext);
+  const { user, Logout } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -50,19 +50,6 @@ const Navbar = () => {
 
   return (
     <nav>
-      {/* Left */}
-      <div className={Styles.logo}>
-        <Link to="/">
-          <img src="/logo.png" alt="logo" />
-        </Link>
-
-        <Link to="/">
-          <div className={Styles.text_logo}>
-            <img src="/instaVerse-text-logo.png" alt="Instaverse" />
-          </div>
-        </Link>
-      </div>
-
       {/* Right */}
       <div className={Styles.right_content}>
         <div className={Styles.profile_container} ref={dropdownRef}>
