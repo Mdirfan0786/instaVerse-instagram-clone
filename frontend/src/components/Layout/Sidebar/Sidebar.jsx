@@ -67,7 +67,8 @@ const Sidebar = () => {
           <Button
             variant="outlined"
             color="error"
-            size="small"
+            fullWidth={false}
+            sx={{ px: 2, py: 0.5, fontSize: "12px" }}
             onClick={handleLogout}
           >
             Logout

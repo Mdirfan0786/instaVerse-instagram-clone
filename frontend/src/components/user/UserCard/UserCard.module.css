@@ -1,0 +1,36 @@
+.userCard_Container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userCard img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user_details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.user_details > p {
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user_details > span {
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #999;
+}

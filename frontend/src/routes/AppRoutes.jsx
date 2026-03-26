@@ -9,6 +9,8 @@ import Profile from "../pages/Profile/Profile.jsx";
 import SavedPost from "../pages/SavedPosts/SavedPosts.jsx";
 import AuthCallback from "../pages/AuthCallback/AuthCallback.jsx";
 import Settings from "../pages/Settings/Settings.jsx";
+import Create from "../pages/Create/Create.jsx";
+import Notification from "../pages/Notification/Notification.jsx";
 
 import ProtectedRoutes from "./protectedRoutes";
 import AppLayout from "../components/Layout/AppLayout/AppLayout.jsx";
@@ -33,6 +35,8 @@ const AppRoutes = () => {
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
+          <Route path="/create" element={<Create />} />
+          <Route path="/notifications" element={<Notification />} />
           <Route path="/saved" element={<SavedPost />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/profile/:username" element={<Profile />} />
