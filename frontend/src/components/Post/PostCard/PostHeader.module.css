@@ -1,0 +1,18 @@
+/* Header */
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.postHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.username {
+  font-weight: 600 !important;
+  cursor: pointer;
+}

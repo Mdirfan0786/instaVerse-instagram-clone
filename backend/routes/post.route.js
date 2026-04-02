@@ -26,7 +26,7 @@ router.get("/feed", isLoggedIn, getFeed);
 // ================= Explore =================
 router.get("/explore", isLoggedIn, explorePosts);
 
-// ================= Explore =================
+// ================= Saved Post =================
 router.get("/saved", isLoggedIn, getSavedPost);
 
 // ================= User All Posts (Profile) =================

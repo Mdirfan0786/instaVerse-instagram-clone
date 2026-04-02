@@ -1,0 +1,20 @@
+.postActions {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 10px;
+}
+
+.leftActions {
+  display: flex;
+  gap: 0.9rem;
+}
+
+.actionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.liked {
+  color: red;
+}

@@ -1,0 +1,15 @@
+.postCaption {
+  padding: 0 10px 10px;
+}
+
+.username {
+  font-weight: 600;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.moreText {
+  color: gray;
+  cursor: pointer;
+  font-weight: 500;
+}
